@@ -162,17 +162,20 @@ if __name__ == '__main__':
     path = Path(os.path.realpath(sys.argv[0]))
     rootPath = path.parent.parent
     if not disable_network:
-        os.system(
-            "git clone https://github.com/VideoTogether/localvideo {}/source/local".format(rootPath))
-        os.system("cd {}/source/local && git pull".format(rootPath))
+        if not os.path.exists(rootPath.joinpath("source/local")):
+            os.system(
+                'git clone https://github.com/VideoTogether/localvideo "{}/source/local"'.format(rootPath))
+        os.system('cd "{}/source/local" && git pull'.format(rootPath))
 
-        os.system(
-            "git clone https://github.com/VideoTogether/website_next {}/source/website".format(rootPath))
-        os.system("cd {}/source/website && git pull".format(rootPath))
+        if not os.path.exists(rootPath.joinpath("source/website")):
+            os.system(
+                'git clone https://github.com/VideoTogether/website_next "{}/source/website"'.format(rootPath))
+        os.system('cd "{}/source/website" && git pull'.format(rootPath))
 
-        os.system(
-            "git clone https://github.com/VideoTogether/setting {}/source/setting".format(rootPath))
-        os.system("cd {}/source/setting && git pull".format(rootPath))
+        if not os.path.exists(rootPath.joinpath("source/setting")):
+            os.system(
+                'git clone https://github.com/VideoTogether/setting "{}/source/setting"'.format(rootPath))
+        os.system('cd "{}/source/setting" && git pull'.format(rootPath))
 
     build()
 

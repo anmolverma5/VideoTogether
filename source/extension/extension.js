@@ -12,6 +12,10 @@
 // @grant        GM.getValue
 // @grant        GM.getTab
 // @grant        GM.saveTab
+// @connect      youtube-sync.vezpec.com
+// @connect      vezpec.com
+// @connect      127.0.0.1
+// @connect      localhost
 // @connect      2gether.video
 // @connect      api.2gether.video
 // @connect      api.begin0114.wiki
@@ -278,7 +282,7 @@
 
         if (isTrustPageCache == undefined) {
             const domains = [
-                '2gether.video', 'videotogether.github.io'
+                '2gether.video', 'videotogether.github.io', 'vezpec.com'
             ];
 
             const hostname = window.location.hostname;
@@ -302,7 +306,10 @@
                         && !url.hostname.endsWith("begin0114.wiki")
                         && !url.hostname.endsWith("panghair.com")
                         && !url.hostname.endsWith("videotogether.github.io")
-                        && !url.hostname.endsWith("aliyuncs.com")) {
+                        && !url.hostname.endsWith("aliyuncs.com")
+                        && !url.hostname.endsWith("vezpec.com")
+                        && !url.hostname.endsWith("127.0.0.1")
+                        && !url.hostname.endsWith("localhost")) {
                         console.error("permission error", e.data);
                         return;
                     }
