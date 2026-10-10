@@ -1,0 +1,7 @@
+{
+    "sponsors": [],
+    "blockDomains": [],
+    "chinaIpList": "./chn_ip.txt",
+    "krakenGlobalEndpoint": "",
+    "krakenChinaEndpoint": ""
+}

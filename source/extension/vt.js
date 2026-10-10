@@ -579,7 +579,9 @@
             this._connectedToService = false;
             try {
                 this.disconnect()
-                this._socket = new WebSocket(`wss://${extension.video_together_host.replace("https://", "")}/ws?language=${language}`);
+                let wsProtocol = extension.video_together_host.startsWith("http://") ? "ws://" : "wss://";
+                let cleanHost = extension.video_together_host.replace(/^https?:\/\//, "").replace(/\/$/, "");
+                this._socket = new WebSocket(`${wsProtocol}${cleanHost}/ws?language=${language}`);
                 this._socket.onmessage = async e => {
                     let lines = e.data.split('\n');
                     for (let i = 0; i < lines.length; i++) {
@@ -3101,7 +3103,11 @@
                 } catch { }
                 try {
                     if (this.minTrip == 1e9 || !this.httpSucc) {
-                        this.SyncTimeWithServer(this.video_together_main_host);
+                        this.SyncTimeWithServer(this.video_together_main_host).catch(async () => {
+                            try {
+                                await this.SyncTimeWithServer("http://127.0.0.1:5001/");
+                            } catch { }
+                        });
                         setTimeout(() => {
                             if (this.minTrip == 1e9 || !this.httpSucc) {
                                 getApiHostChina().then(host => {

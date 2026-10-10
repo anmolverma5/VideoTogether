@@ -66,7 +66,13 @@ func main() {
 
 	rand.Seed(time.Now().UnixNano())
 	Init()
-	_ = os.WriteFile("admin_password.txt", []byte(adminPassword), 0644)
+	if saved, err := os.ReadFile("admin_password.txt"); err == nil {
+		if password := strings.TrimSpace(string(saved)); password != "" {
+			adminPassword = password
+		}
+	} else if os.IsNotExist(err) {
+		_ = os.WriteFile("admin_password.txt", []byte(adminPassword), 0600)
+	}
 	vtSrv := NewVideoTogetherService(time.Minute * 3)
 	server := newSlashFix(
 		render.New(),
